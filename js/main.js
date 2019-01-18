@@ -86,48 +86,73 @@ function computerMove() {
     return computerChoices[random];
 };
 
+//Who Won 
+
+function whoWon({
+    human,
+    computer
+}) {
+    switch (human) {
+        case "rock":
+            switch (computer) {
+                case "paper":
+                    return "computer";
+                case "scissors":
+                    return "human";
+                default:
+                    return "draw"
+            }
+        case "paper":
+            switch (computer) {
+                case "scissors":
+                    return "computer";
+                case "rock":
+                    return "human";
+                default:
+                    return "draw"
+            }
+        case "scissors":
+            switch (computer) {
+                case "rock":
+                    return "computer";
+                case "paper":
+                    return "human";
+                default:
+                    return "draw"
+            }
+    }
+}
+
 //PROCESS OF GAME
 
 function playerMove(name) {
     var computerM = computerMove();
-    var draw = 'Draw';
-    var youWon = 'You Won';
-    var computerWon = 'Computer Won';
     params.eachRound++;
-    if ((name === 'rock' && computerM === 'paper') ||
-        (name === 'paper' && computerM === 'scissors') ||
-        (name === 'scissors' && computerM === 'rock')) {
+
+    let thisRoundObj = {
+        'round-nb': params.eachRound,
+        'computer-move': computerM,
+        'player-move': name,
+    };
+    let result = whoWon({
+        human: name,
+        computer: computerM
+    })
+
+    if (result === 'computer') {
         params.computerScore++;
-        params.score.innerHTML = params.humanScore + ' - ' + params.computerScore;
-        params.output.innerHTML = 'COMPUTER WON. You played ' + name + ', computer played ' + computerM;
-        params.progress.push({
-            'round-nb': params.eachRound,
-            'computer-move': computerM,
-            'player-move': name,
-            'result': computerWon,
-        });
-        endRound();
-    } else if ((name === 'rock' && computerM === 'scissors') ||
-        (name === 'paper' && computerM === 'rock') ||
-        (name === 'scissors' && computerM === 'paper')) {
+        thisRoundObj.result = 'Computer Won';
+    } else if (result === 'human') {
         params.humanScore++;
-        params.score.innerHTML = params.humanScore + ' - ' + params.computerScore;
-        params.output.innerHTML = 'YOU WON. You played ' + name + ', computer played ' + computerM;
-        params.progress.push({
-            'round-nb': params.eachRound,
-            'computer-move': computerM,
-            'player-move': name,
-            'result': youWon,
-        });
-        endRound();
+        thisRoundObj.result = 'You Won';
     } else {
-        params.output.innerHTML = 'DRAW. You played ' + name + ', computer played ' + computerM;
-        params.progress.push({
-            'round-nb': params.eachRound,
-            'computer-move': computerM,
-            'player-move': name,
-            'result': draw,
-        });
+        thisResultObj.result = 'Draw';
+    }
+    params.score.innerHTML = params.humanScore + ' - ' + params.computerScore;
+    params.output.innerHTML = thisRoundObj.result + '. You played ' + name + ', computer played ' + computerM;
+    params.progress.push(thisRoundObj);
+    if (thisRoundObj.result !== 'Draw') {
+        endRound();
     }
 }
 
