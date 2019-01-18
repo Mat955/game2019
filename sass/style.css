@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto:500&subset=latin-ext");
+
 .circle {
   background-color: #cccccc !important;
   color: black !important;
@@ -43,9 +44,9 @@ body {
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
   -ms-flex-pack: distribute;
-      justify-content: space-around;
+  justify-content: space-around;
 }
 
 #score {
@@ -111,7 +112,7 @@ button:nth-of-type(3) {
   border-width: 2px;
   border-style: outset;
   -o-border-image: initial;
-     border-image: initial;
+  border-image: initial;
   font-weight: 900;
   text-align: center;
 }
@@ -144,4 +145,5 @@ button:nth-of-type(3) {
 .modal table th {
   padding-right: 30px;
 }
+
 /*# sourceMappingURL=style.css.map */
