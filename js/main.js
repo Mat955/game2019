@@ -88,71 +88,114 @@ function computerMove() {
 
 //Who Won 
 
-function whoWon({
-    human,
-    computer
-}) {
-    switch (human) {
-        case "rock":
-            switch (computer) {
-                case "paper":
-                    return "computer";
-                case "scissors":
-                    return "human";
-                default:
-                    return "draw"
-            }
-        case "paper":
-            switch (computer) {
-                case "scissors":
-                    return "computer";
-                case "rock":
-                    return "human";
-                default:
-                    return "draw"
-            }
-        case "scissors":
-            switch (computer) {
-                case "rock":
-                    return "computer";
-                case "paper":
-                    return "human";
-                default:
-                    return "draw"
-            }
-    }
-}
+// function whoWon({
+//     human,
+//     computer
+// }) {
+//     switch (human) {
+//         case "rock":
+//             switch (computer) {
+//                 case "paper":
+//                     return "computer";
+//                 case "scissors":
+//                     return "human";
+//                 default:
+//                     return "draw"
+//             }
+//         case "paper":
+//             switch (computer) {
+//                 case "scissors":
+//                     return "computer";
+//                 case "rock":
+//                     return "human";
+//                 default:
+//                     return "draw"
+//             }
+//         case "scissors":
+//             switch (computer) {
+//                 case "rock":
+//                     return "computer";
+//                 case "paper":
+//                     return "human";
+//                 default:
+//                     return "draw"
+//             }
+//     }
+// }
+
+// var computerM = computerMove();
+// params.eachRound++;
+
+// let thisRoundObj = {
+//     'round-nb': params.eachRound,
+//     'computer-move': computerM,
+//     'player-move': name,
+// };
+// let result = whoWon({
+//     human: name,
+//     computer: computerM
+// })
+
+// if (result === 'computer') {
+//     params.computerScore++;
+//     thisRoundObj.result = 'Computer Won';
+// } else if (result === 'human') {
+//     params.humanScore++;
+//     thisRoundObj.result = 'You Won';
+// } else {
+//     thisResultObj.result = 'Draw';
+// }
+// params.score.innerHTML = params.humanScore + ' - ' + params.computerScore;
+// params.output.innerHTML = thisRoundObj.result + '. You played ' + name + ', computer played ' + computerM;
+// params.progress.push(thisRoundObj);
+// if (thisRoundObj.result !== 'Draw') {
+//     endRound();
+// }
+
+
 
 //PROCESS OF GAME
 
 function playerMove(name) {
     var computerM = computerMove();
     params.eachRound++;
-
-    let thisRoundObj = {
-        'round-nb': params.eachRound,
-        'computer-move': computerM,
-        'player-move': name,
-    };
-    let result = whoWon({
-        human: name,
-        computer: computerM
-    })
-
-    if (result === 'computer') {
+    if ((name === 'rock' && computerM === 'paper') ||
+        (name === 'paper' && computerM === 'scissors') ||
+        (name === 'scissors' && computerM === 'rock')) {
         params.computerScore++;
-        thisRoundObj.result = 'Computer Won';
-    } else if (result === 'human') {
-        params.humanScore++;
-        thisRoundObj.result = 'You Won';
-    } else {
-        thisResultObj.result = 'Draw';
-    }
-    params.score.innerHTML = params.humanScore + ' - ' + params.computerScore;
-    params.output.innerHTML = thisRoundObj.result + '. You played ' + name + ', computer played ' + computerM;
-    params.progress.push(thisRoundObj);
-    if (thisRoundObj.result !== 'Draw') {
+        params.score.innerHTML = params.humanScore + ' - ' + params.computerScore;
+        var computerWon = 'computer won';
+        params.progress.push({
+            'round-nb': params.eachRound,
+            'computer-move': computerM,
+            'player-move': name,
+            'result': computerWon,
+        });
+        params.output.innerHTML = 'COMPUTER WON. You played ' + name + ', computer played ' + computerM;
         endRound();
+    } else if ((name === 'rock' && computerM === 'scissors') ||
+        (name === 'scissors' && computerM === 'paper') ||
+        (name === 'paper' && computerM === 'rock')) {
+        params.humanScore++;
+        params.score.innerHTML = params.humanScore + ' - ' + params.computerScore;
+        var youWon = 'you won';
+        params.progress.push({
+            'round-nb': params.eachRound,
+            'computer-move': computerM,
+            'player-move': name,
+            'result': youWon,
+        });
+        params.output.innerHTML = 'YOU WON. You played ' + name + ', computer played ' + computerM;
+        endRound();
+    } else {
+        params.output.innerHTML = 'DRAW. You played ' + name + ', computer played ' + computerM;
+        var draw = 'draw';
+        params.progress.push({
+            'round-nb': params.eachRound,
+            'computer-move': computerM,
+            'player-move': name,
+            'result': draw,
+        });
     }
 }
 
